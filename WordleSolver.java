@@ -29,7 +29,7 @@ public class WordleSolver {
     }
 
     public static void playWordle() throws FileNotFoundException, IOException {
-        String secretWord = secretWord();
+        //String secretWord = secretWord();
 
     }
 
