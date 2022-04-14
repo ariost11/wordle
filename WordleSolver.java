@@ -6,70 +6,7 @@ import java.io.*;
 
 public class WordleSolver {
     public static void main(String args[]) throws FileNotFoundException, IOException {
-        findFreqOfLetter();
-
-        /*
-        for(int i = 0; i < 1; i++) {
-            String secret = secretWord();
-            System.out.println("crane");
-            System.out.println(findResults("crane", "agate"));
-        }
-        */
-        //realWordle();
-    }
-
-    private static void findFreqOfLetter() throws FileNotFoundException, IOException {
-        ArrayList<String> possibleWords = new ArrayList<>();
-        FileReader file = new FileReader("solutions.txt");
-        BufferedReader br = new BufferedReader(file);
-        String str = br.readLine();
-        while (str != null) {
-            possibleWords.add(str);
-            str = br.readLine();
-        }
-        br.close();
-
-        //adding all frequencies to arrays
-        ArrayList<HashMap<Character, Integer>> freq = new ArrayList<>();
-        for(String word : possibleWords) {
-            for(int i = 0; i < 5; i++) {
-                freq.add(new HashMap<>());
-                HashMap<Character, Integer> map = freq.get(i);
-                if(map.containsKey(word.charAt(i))) {
-                    map.put(word.charAt(i), map.get(word.charAt(i)) + 1);
-                } else {
-                    map.put(word.charAt(i), 1);
-                }
-            }
-        }
-
-        ArrayList<ArrayList<Character>> chars = new ArrayList<>();
-        //sorting each of the frequencies
-        for(int i = 0; i < 5; i++) {
-            chars.add(new ArrayList<>());
-            HashMap<Character, Integer> map = freq.get(i);
-            while(!map.isEmpty()) {
-                Character cMax = null;
-                Integer iMax = null;
-                for(Character key : map.keySet()) {
-                    if(cMax == null || map.get(key) > iMax) {
-                        cMax = key;
-                        iMax = map.get(key);
-                    }
-                }
-                chars.get(i).add(cMax);
-                map.remove(cMax);
-            }
-        }
-
-        for(int i = 0; i < 5; i++) {
-            System.out.println(i);
-            for(Character ch : chars.get(i)) {
-                System.out.print(ch + " ");
-            }
-            System.out.println();
-        }
-
+        realWordle();
     }
 
     public static void realWordle() throws FileNotFoundException, IOException {
@@ -232,19 +169,20 @@ public class WordleSolver {
 
             //randomizing word selection if there is only 1 unknown letter remaining
             int numG = 0;
-            int indexB = 0;
             for(int i = 0; i < 5; i++) {
                 if(results.charAt(i) == 'g')
                     numG++;
-                if(results.charAt(i) == 'b')
-                    indexB = i;
             }
             if(numG == 4) {
-                ArrayList<Character> options = new ArrayList<>();
+                ArrayList<String> randomWords = new ArrayList<>();
                 for(String key : scores.keySet()) {
-                    options.add(key.charAt(indexB));
+                    if(nextGuess == null || scores.get(key) == max) {
+                        randomWords.add(key);
+                    }
                 }
-                nextGuess = findBestLetter(null, indexB, nextGuess);
+
+                Random rand = new Random();
+                nextGuess = randomWords.get(rand.nextInt(randomWords.size()));
             } 
 
             if(possibleWords.size() <= 5 && possibleWords.size() > 1) {
@@ -327,55 +265,5 @@ public class WordleSolver {
                 }
             }
         return nextGuess;
-    }
-
-    /**
-     * Order came from calculations.
-     * Inspired by graphic at https://norvig.com/mayzner.html
-     */
-    private static String findBestLetter(ArrayList<Character> list, int position, String word) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(word.substring(0, position));
-        //TODO: find order of likelihood from each index and add all if statements in.
-        if(position == 0) {
-            /*
-            1.
-            2.
-            3.
-            4.
-            5.
-            6.
-            7.
-            8.
-            9.
-            10.
-            11.
-            12.
-            13.
-            14.
-            15.
-            16.
-            17.
-            18.
-            19.
-            20.
-            21.
-            22.
-            23.
-            24.
-            25.
-            26.
-            */
-        } else if(position == 1) {
-
-        } else if(position == 2) {
-
-        } else if(position == 3) {
-
-        } else {
-
-        }
-        builder.append(word.substring(position + 1, 4));
-        return builder.toString();
     }
 }
