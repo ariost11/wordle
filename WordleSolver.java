@@ -13,7 +13,7 @@ public class WordleSolver {
             System.out.println(findResults("crane", "agate"));
         }
         */
-        realWordle();
+        freqGuess();
     }
 
     public static void realWordle() throws FileNotFoundException, IOException {
@@ -65,7 +65,7 @@ public class WordleSolver {
         return results.toString();
     }
 
-    public static int guessWord() throws FileNotFoundException, IOException {
+    public static int freqGuess() throws FileNotFoundException, IOException {
         Scanner reader = new Scanner(System.in);
         System.out.print("What was your first guess? ");
         String guess = reader.nextLine();
@@ -173,6 +173,7 @@ public class WordleSolver {
                     nextGuess = key;
                 }
             }
+            // new change fdjsklfd;
 
             //equal scoring words
             ArrayList<String> equalScores = new ArrayList<>();
@@ -268,5 +269,13 @@ public class WordleSolver {
                 }
             }
         return nextGuess;
+    }
+
+
+    /**
+     * 
+     */
+    public static int statGuess() throws FileNotFoundException, IOException {
+        return -1;
     }
 }
