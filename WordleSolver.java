@@ -6,6 +6,7 @@ import java.io.*;
 
 public class WordleSolver {
     public static void main(String args[]) throws FileNotFoundException, IOException {
+<<<<<<< HEAD
         /*
         for(int i = 0; i < 1; i++) {
             String secret = secretWord();
@@ -14,6 +15,9 @@ public class WordleSolver {
         }
         */
         freqGuess();
+=======
+        realWordle();
+>>>>>>> b5d5398a5f4416e2405a8e393900d11e33729fc1
     }
 
     public static void realWordle() throws FileNotFoundException, IOException {
@@ -29,7 +33,7 @@ public class WordleSolver {
     }
 
     public static void playWordle() throws FileNotFoundException, IOException {
-        String secretWord = secretWord();
+        //String secretWord = secretWord();
 
     }
 
@@ -175,18 +179,23 @@ public class WordleSolver {
             }
             // new change fdjsklfd;
 
-            //equal scoring words
-            ArrayList<String> equalScores = new ArrayList<>();
-            for(String key : scores.keySet()) {
-                if(Math.abs(scores.get(key) - scores.get(nextGuess)) <= 3) {
-                    equalScores.add(key);
+            //randomizing word selection if there is only 1 unknown letter remaining
+            int numG = 0;
+            for(int i = 0; i < 5; i++) {
+                if(results.charAt(i) == 'g')
+                    numG++;
+            }
+            if(numG == 4) {
+                ArrayList<String> randomWords = new ArrayList<>();
+                for(String key : scores.keySet()) {
+                    if(nextGuess == null || scores.get(key) == max) {
+                        randomWords.add(key);
+                    }
                 }
-            }
 
-            if(equalScores.size() > 1) {
                 Random rand = new Random();
-                nextGuess = equalScores.get(rand.nextInt(equalScores.size()));
-            }
+                nextGuess = randomWords.get(rand.nextInt(randomWords.size()));
+            } 
 
             if(possibleWords.size() <= 5 && possibleWords.size() > 1) {
                 System.out.print("There are " + possibleWords.size() + " possible solutions left. The possible options are: ");
@@ -197,7 +206,6 @@ public class WordleSolver {
                 System.out.println("You should guess " + nextGuess + ".");
             } else if (possibleWords.size() == 1) {
                 System.out.println("There is only 1 possible solution left! Guess " + possibleWords.get(0) + " to win!");
-                //break;
             } else {
                 System.out.println("There are " + possibleWords.size() + " possible solutions left. You should guess " + nextGuess + ".");
             }
@@ -210,7 +218,7 @@ public class WordleSolver {
         return round;
     }
 
-    public static String firstWord() throws FileNotFoundException, IOException {
+    private static String firstWord() throws FileNotFoundException, IOException {
         ArrayList<String> possibleWords = new ArrayList<>();
         FileReader file = new FileReader("solutions.txt");
         BufferedReader br = new BufferedReader(file);
