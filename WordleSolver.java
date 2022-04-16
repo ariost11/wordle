@@ -6,7 +6,6 @@ import java.io.*;
 
 public class WordleSolver {
     public static void main(String args[]) throws FileNotFoundException, IOException {
-<<<<<<< HEAD
         /*
         for(int i = 0; i < 1; i++) {
             String secret = secretWord();
@@ -14,10 +13,7 @@ public class WordleSolver {
             System.out.println(findResults("crane", "agate"));
         }
         */
-        freqGuess();
-=======
         realWordle();
->>>>>>> b5d5398a5f4416e2405a8e393900d11e33729fc1
     }
 
     public static void realWordle() throws FileNotFoundException, IOException {
@@ -26,7 +22,7 @@ public class WordleSolver {
         double totalPoints = 0;
         while(!reader.nextLine().equals("end")) {
             numPlayed++;
-            totalPoints += guessWord();
+            totalPoints += freqGuess();
         }
         reader.close();
         System.out.println("Average number of guesses: " + (totalPoints / numPlayed));
